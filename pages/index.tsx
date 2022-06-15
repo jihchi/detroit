@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import { ethers } from "ethers"
 import styles from "../styles/Home.module.css"
+import { Button, useColorMode } from '@chakra-ui/react';
+import LatestTransactions from 'components/LatestTransactions';
 
 const Home = () => {
   const [forkId, setForkId] = useState("")
@@ -8,6 +10,7 @@ const Home = () => {
   const [blockNumber, setBlockNumber] = useState(0)
   const [disabled, setDisabled] = useState(false)
   const [tx, setTx] = useState({})
+  const { colorMode, toggleColorMode } = useColorMode();
 
   useEffect(() => {
     const forkId = localStorage.getItem('forkId')
@@ -58,27 +61,24 @@ const Home = () => {
     <div className={styles.container}>
       <div className={styles.header}>
         <div className={styles.title}>Simple demo for Detroit Simulation Provider</div>
-        {
-          !forkId ?
-            <button
-              className={styles.button}
-              onClick={fork}
-              disabled={disabled}
-            >Fork</button>
-            : <button
-              className={styles.button}
-              onClick={unfork}>Unfork</button>
-        }
+        <Button onClick={toggleColorMode}>
+          Toggle {colorMode === 'light' ? 'Dark' : 'Light'}
+        </Button>
+        <Button
+          onClick={forkId ? unfork : fork}
+          disabled={disabled}
+          colorScheme="blue"
+        >
+          {forkId ? "Unfork" : "Fork"}</Button>
       </div>
       <div className={styles.content}>
         {
           forkId ?
             <div className={styles.demo}>
               <div style={{ marginBottom: "20px" }}>Example: send a transaction</div>
-              <button
-                className={styles.button}
+              <Button
                 onClick={send}
-              >Send a transaction</button>
+              >Send a transaction</Button>
               <div style={{ marginTop: "20px" }}>TX Result</div>
               <div style={{ marginTop: "20px" }}>
                 {tx ? <pre>{JSON.stringify(tx, null, 2)}</pre> : null}
@@ -87,7 +87,7 @@ const Home = () => {
             : <div>Please fork first</div>
         }
       </div>
-
+      <LatestTransactions />
     </div>
   )
 }

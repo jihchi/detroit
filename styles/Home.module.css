@@ -2,22 +2,6 @@
   padding: 0 2rem;
 }
 
-.button {
-  background-color: #468BDF;
-  border: none;
-  color: white;
-  padding: 0.5rem 1rem;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 1rem;
-  border-radius: 0.2rem;
-}
-
-.button:disabled {
-  background-color: #999;
-}
-
 .header {
   margin-top: 2rem;
 }
